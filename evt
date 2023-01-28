@@ -1,0 +1,19 @@
+#!/bin/sh
+if [ "$1" = "enable" ]; then
+	dir="/home/debian/evt-bbb" # this should be changed to be dynamic
+	if [ "$2" = "wifi" ]; then
+		wdir="$dir/wifi"
+		systemctl stop hostapd
+		cp "$dir/interfaces /etc/network/interfaces"
+		cp "$dir/resolv.conf /etc/network/resolv.conf"
+		cp "$dir/dnsmasq.conf /etc/dnsmasq.conf"
+		systemctl start NetworkManager
+	elif [ "$2" = "ap" ]; then
+		systemctl stop hostapd
+	else
+		echo "unknown option '$2'; available options are:"
+		echo "    nm, ap"
+	fi
+else
+	echo "unknown command '$1'"
+fi
