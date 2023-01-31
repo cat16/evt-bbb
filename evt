@@ -2,19 +2,27 @@
 if [ "$1" = "enable" ]; then
 	dir="/home/debian/evt-bbb" # this should be changed to be dynamic
 	if [ "$2" = "wifi" ]; then
+                echo "Enabling wifi..."
 		wdir="$dir/wifi"
 		systemctl stop hostapd
 		cp "$wdir/interfaces" "/etc/network/interfaces"
 		cp "$wdir/resolv.conf" "/etc/resolv.conf"
 		cp "$wdir/dnsmasq.conf" "/etc/dnsmasq.conf"
 		systemctl start NetworkManager
+                systemctl restart dnsmasq
+                systemctl restart networking
+                echo "Finished."
+
 	elif [ "$2" = "ap" ]; then
+                echo "Enabling AP..."
 		apdir="$dir/ap"
 		systemctl stop NetworkManager
 		cp "$apdir/interfaces" "/etc/network/interfaces"
 		cp "$apdir/dnsmasq.conf" "/etc/dnsmasq.conf"
                 systemctl start hostapd
+                systemctl restart dnsmasq
                 systemctl restart networking
+                echo "Finished."
 	else
 		echo "unknown option '$2'; available options are:"
 		echo "    nm, ap"
