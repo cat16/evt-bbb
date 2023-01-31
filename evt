@@ -5,7 +5,7 @@ if [ "$1" = "enable" ]; then
 		wdir="$dir/wifi"
 		systemctl stop hostapd
 		cp "$wdir/interfaces" "/etc/network/interfaces"
-		cat "$wdir/resolv.conf" >> "/etc/resolv.conf"
+		cp "$wdir/resolv.conf" "/etc/resolv.conf"
 		cp "$wdir/dnsmasq.conf" "/etc/dnsmasq.conf"
 		systemctl start NetworkManager
 	elif [ "$2" = "ap" ]; then
@@ -14,6 +14,7 @@ if [ "$1" = "enable" ]; then
 		cp "$apdir/interfaces" "/etc/network/interfaces"
 		cp "$apdir/dnsmasq.conf" "/etc/dnsmasq.conf"
                 systemctl start hostapd
+                systemctl restart networking
 	else
 		echo "unknown option '$2'; available options are:"
 		echo "    nm, ap"
