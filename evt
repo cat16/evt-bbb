@@ -9,7 +9,7 @@ if [ "$1" = "enable" ]; then
 		cp "$wdir/dnsmasq.conf" "/etc/dnsmasq.conf"
 		systemctl start NetworkManager
 	elif [ "$2" = "ap" ]; then
-		apdir="$dir/wifi"
+		apdir="$dir/ap"
 		systemctl stop NetworkManager
 		cp "$apdir/interfaces" "/etc/network/interfaces"
 		cp "$apdir/dnsmasq.conf" "/etc/dnsmasq.conf"
