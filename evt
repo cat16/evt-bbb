@@ -4,9 +4,9 @@ if [ "$1" = "enable" ]; then
 	if [ "$2" = "wifi" ]; then
 		wdir="$dir/wifi"
 		systemctl stop hostapd
-		cp "$dir/interfaces /etc/network/interfaces"
-		cp "$dir/resolv.conf /etc/network/resolv.conf"
-		cp "$dir/dnsmasq.conf /etc/dnsmasq.conf"
+		cp "$wdir/interfaces" "/etc/network/interfaces"
+		cat "$wdir/resolv.conf" >> "/etc/resolv.conf"
+		cp "$wdir/dnsmasq.conf" "/etc/dnsmasq.conf"
 		systemctl start NetworkManager
 	elif [ "$2" = "ap" ]; then
 		systemctl stop hostapd
